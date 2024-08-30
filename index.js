@@ -34,7 +34,7 @@ app.post("/register", async (req, res) => {
     res.status(400);
     res.json("User already exists");
   } else {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     UsersModel.insertMany({
       username,
       name,
