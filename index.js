@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
 const UsersModel = require("./module/Users");
+dotenv.config();
+
 app.use(express.json());
 app.use(cors());
 app.use((req, res, next) => {
@@ -14,7 +17,9 @@ app.use((req, res, next) => {
 
 mongoose.connect("mongodb://localhost:27017/usersData");
 
-app.listen(3001, () => {
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
   console.log("Server Running at http://localhost:3001");
 });
 
@@ -55,7 +60,7 @@ app.post("/login", async (req, res) => {
     const isPasswordMatched = await bcrypt.compare(password, user.password);
     if (isPasswordMatched === true) {
       const payload = { username: username };
-      const jwtToken = jwt.sign(payload, "dgfhefbrker");
+      const jwtToken = jwt.sign(payload, process.env.JWT_TOKEN);
       res.send({ jwtToken });
     } else {
       res.status(400);
