@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect("mongodb://localhost:27017/usersData");
+mongoose.connect(process.env.MONGO_URI);
 
 const PORT = process.env.PORT || 3001;
 
